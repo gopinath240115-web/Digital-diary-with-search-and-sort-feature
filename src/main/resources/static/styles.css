@@ -1,0 +1,220 @@
+:root {
+	--pastel-pink: #ffd1dc;
+	--pastel-lilac: #e6d5ff;
+	--pastel-mint: #d4f7ec;
+	--pastel-yellow: #fff5c3;
+	--pastel-blue: #d8ecff;
+	--ink: #2a2a30;
+	--ink-soft: #3f3f46;
+	--surface: #ffffff;
+	--shadow: 0 10px 30px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+	--radius-lg: 18px;
+	--radius-md: 12px;
+	--radius-sm: 8px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	color: var(--ink);
+	background:
+		radial-gradient(1200px 600px at -5% -10%, var(--pastel-pink) 0%, transparent 55%),
+		radial-gradient(1400px 700px at 110% -10%, var(--pastel-blue) 0%, transparent 60%),
+		radial-gradient(1000px 600px at 50% 120%, var(--pastel-mint) 0%, transparent 55%),
+		#fdfcff;
+}
+
+.app-header {
+	max-width: 1100px;
+	margin: 48px auto 12px;
+	padding: 0 20px;
+	text-align: center;
+}
+
+.brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+	justify-content: center;
+}
+
+.logo {
+	width: 44px;
+	height: 44px;
+	display: grid;
+	place-items: center;
+	border-radius: 12px;
+	background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-lilac));
+	box-shadow: var(--shadow);
+	font-size: 22px;
+}
+
+h1 {
+	margin: 0;
+	font-size: 32px;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.tagline {
+	margin: 10px 0 0;
+	color: var(--ink-soft);
+	opacity: 0.8;
+}
+
+.container {
+	max-width: 1100px;
+	margin: 20px auto 80px;
+	padding: 0 20px;
+}
+
+.controls {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 14px;
+	align-items: center;
+	background:
+		linear-gradient(135deg, var(--pastel-yellow), var(--pastel-mint));
+	padding: 16px;
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow);
+	border: 1px solid rgba(0,0,0,0.05);
+}
+
+.search-group input[type="search"] {
+	width: 100%;
+	padding: 14px 16px;
+	border: 1px solid rgba(0,0,0,0.08);
+	border-radius: var(--radius-md);
+	background: var(--surface);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 0 0 2px transparent;
+	transition: box-shadow 0.2s ease, transform 0.05s ease;
+	font-size: 15px;
+}
+
+.search-group input[type="search"]:focus {
+	outline: none;
+	box-shadow: 0 0 0 4px rgba(0, 140, 255, 0.15);
+}
+
+.sort-group select {
+	padding: 14px 16px;
+	border: 1px solid rgba(0,0,0,0.08);
+	border-radius: var(--radius-md);
+	background: var(--surface);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+	font-size: 15px;
+	min-width: 180px;
+}
+
+.entries {
+	margin-top: 20px;
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	gap: 18px;
+}
+
+.entry-card {
+	grid-column: span 6;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 18px;
+	background: var(--surface);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow);
+	border: 1px solid rgba(0,0,0,0.05);
+	position: relative;
+	overflow: hidden;
+}
+
+.entry-card::before {
+	content: "";
+	position: absolute;
+	inset: -40% -30% auto auto;
+	height: 160px;
+	width: 160px;
+	background: radial-gradient(circle at 30% 30%, var(--pastel-lilac), transparent 60%),
+		radial-gradient(circle at 70% 70%, var(--pastel-pink), transparent 60%);
+	opacity: 0.25;
+	filter: blur(8px);
+	transform: rotate(12deg);
+}
+
+.entry-card header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 12px;
+}
+
+.entry-card h2 {
+	margin: 0;
+	font-size: 18px;
+	letter-spacing: -0.01em;
+}
+
+.entry-card time {
+	font-size: 13px;
+	color: var(--ink-soft);
+	background: rgba(0,0,0,0.04);
+	padding: 6px 10px;
+	border-radius: var(--radius-sm);
+}
+
+.entry-card p {
+	margin: 0;
+	line-height: 1.6;
+	color: #36363c;
+}
+
+.tags {
+	margin: 2px 0 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tags li {
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-lilac));
+	font-size: 12px;
+	border: 1px solid rgba(0,0,0,0.04);
+}
+
+.app-footer {
+	max-width: 1100px;
+	margin: 40px auto 60px;
+	padding: 0 20px;
+	text-align: center;
+	color: var(--ink-soft);
+}
+
+.visually-hidden {
+	position: absolute !important;
+	height: 1px; width: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+	.entry-card { grid-column: span 12; }
+	.controls { grid-template-columns: 1fr; }
+	.sort-group select { width: 100%; }
+}
+
+

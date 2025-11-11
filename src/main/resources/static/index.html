@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Pastel Digital Diary</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<header class="app-header">
+		<div class="brand">
+			<div class="logo">✿</div>
+			<h1>Pastel Digital Diary</h1>
+		</div>
+		<p class="tagline">Bright. Clear. Calm. Capture your moments.</p>
+	</header>
+
+	<main class="container">
+		<section class="controls">
+			<div class="search-group">
+				<label for="search" class="visually-hidden">Search entries</label>
+				<input id="search" type="search" placeholder="Search entries..." />
+			</div>
+			<div class="sort-group">
+				<label for="sort" class="visually-hidden">Sort entries</label>
+				<select id="sort">
+					<option value="date-desc">Newest first</option>
+					<option value="date-asc">Oldest first</option>
+					<option value="title-asc">Title A–Z</option>
+					<option value="title-desc">Title Z–A</option>
+				</select>
+			</div>
+		</section>
+
+		<section class="entries" id="entries">
+			<!-- Sample diary cards (you can duplicate/modify or later generate dynamically) -->
+			<article class="entry-card" data-title="Morning Walk" data-date="2025-11-10">
+				<header>
+					<h2>Morning Walk</h2>
+					<time datetime="2025-11-10">Nov 10, 2025</time>
+				</header>
+				<p>Took a serene walk through the park. Dew on the grass, soft sun, quiet streets.</p>
+				<ul class="tags">
+					<li>#wellness</li>
+					<li>#nature</li>
+				</ul>
+			</article>
+
+			<article class="entry-card" data-title="Café Notes" data-date="2025-11-08">
+				<header>
+					<h2>Café Notes</h2>
+					<time datetime="2025-11-08">Nov 8, 2025</time>
+				</header>
+				<p>Sat by the window with a latte. Sketched ideas and listened to soft jazz.</p>
+				<ul class="tags">
+					<li>#ideas</li>
+					<li>#coffee</li>
+				</ul>
+			</article>
+
+			<article class="entry-card" data-title="Book Progress" data-date="2025-11-05">
+				<header>
+					<h2>Book Progress</h2>
+					<time datetime="2025-11-05">Nov 5, 2025</time>
+				</header>
+				<p>Finished chapter four. Loved the character arc and the gentle pacing.</p>
+				<ul class="tags">
+					<li>#reading</li>
+					<li>#reflection</li>
+				</ul>
+			</article>
+
+			<article class="entry-card" data-title="Weekend Cooking" data-date="2025-11-02">
+				<header>
+					<h2>Weekend Cooking</h2>
+					<time datetime="2025-11-02">Nov 2, 2025</time>
+				</header>
+				<p>Tried a new pasta recipe with basil and lemon zest. Light and delicious.</p>
+				<ul class="tags">
+					<li>#cooking</li>
+					<li>#cozy</li>
+				</ul>
+			</article>
+		</section>
+	</main>
+
+	<footer class="app-footer">
+		<p>Made with calm colors and kind thoughts ✨</p>
+	</footer>
+
+	<script>
+		// Minimal enhancement for search and sort
+		(function () {
+			const searchInput = document.getElementById('search');
+			const sortSelect = document.getElementById('sort');
+			const entriesContainer = document.getElementById('entries');
+
+			function normalize(text) {
+				return (text || '').toLowerCase().trim();
+			}
+
+			function applySearch() {
+				const q = normalize(searchInput.value);
+				const cards = entriesContainer.querySelectorAll('.entry-card');
+				cards.forEach(card => {
+					const title = normalize(card.dataset.title);
+					const content = normalize(card.querySelector('p')?.textContent || '');
+					const tagText = normalize(Array.from(card.querySelectorAll('.tags li')).map(li => li.textContent).join(' '));
+					const match = !q || title.includes(q) || content.includes(q) || tagText.includes(q);
+					card.style.display = match ? '' : 'none';
+				});
+			}
+
+			function applySort() {
+				const value = sortSelect.value;
+				const cards = Array.from(entriesContainer.querySelectorAll('.entry-card'));
+				const visible = cards.filter(c => c.style.display !== 'none');
+
+				visible.sort((a, b) => {
+					const titleA = a.dataset.title.toLowerCase();
+					const titleB = b.dataset.title.toLowerCase();
+					const dateA = new Date(a.dataset.date).getTime();
+					const dateB = new Date(b.dataset.date).getTime();
+
+					switch (value) {
+						case 'date-asc': return dateA - dateB;
+						case 'date-desc': return dateB - dateA;
+						case 'title-asc': return titleA.localeCompare(titleB);
+						case 'title-desc': return titleB.localeCompare(titleA);
+						default: return 0;
+					}
+				});
+
+				// Re-append in sorted order
+				visible.forEach(card => entriesContainer.appendChild(card));
+			}
+
+			searchInput.addEventListener('input', () => {
+				applySearch();
+				applySort();
+			});
+			sortSelect.addEventListener('change', applySort);
+
+			// Initialize
+			applySearch();
+			applySort();
+		})();
+	</script>
+
+    <script>
+      async function ping() {
+        try {
+          const res = await fetch('/api/health');
+          const data = await res.json();
+          console.log('Health:', data);
+          const el = document.getElementById('health-status');
+          if (el) el.textContent = 'Backend: ' + (data.status || 'unknown');
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      window.addEventListener('DOMContentLoaded', ping);
+    </script>
+    <div id="health-status" style="font-family: system-ui; margin: 1rem 0;"></div>
+
+</body>
+</html>
+
+
